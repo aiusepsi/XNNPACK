@@ -1,0 +1,11 @@
+# Copyright 2021 Google LLC
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+
+- name: xnn_x32_transpose_ukernel__4x4_sse_4x4
+- name: xnn_x32_transpose_ukernel__4x4_sse_32x32
+- name: xnn_x32_transpose_ukernel__4x4_sse_64x32
+- name: xnn_x32_transpose_ukernel__4x4_sse_18x32
+- name: xnn_x32_transpose_ukernel__4x4_sse_32x18
+- name: xnn_x32_transpose_ukernel__4x4_sse_19x30

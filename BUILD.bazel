@@ -4128,6 +4128,7 @@ ALL_SSE_MICROKERNEL_SRCS = [
     "src/f32-spmm/gen/8x1-minmax-sse.c",
     "src/f32-spmm/gen/16x1-minmax-sse.c",
     "src/f32-spmm/gen/32x1-minmax-sse.c",
+    "src/x32-transpose/transpose-sse.c",
     "src/f32-vbinary/gen/vadd-minmax-sse-x4.c",
     "src/f32-vbinary/gen/vadd-minmax-sse-x8.c",
     "src/f32-vbinary/gen/vaddc-minmax-sse-x4.c",
@@ -6565,6 +6566,7 @@ INTERNAL_MICROKERNEL_HDRS = [
     "src/xnnpack/vaddsub.h",
     "src/xnnpack/vbinary.h",
     "src/xnnpack/vcvt.h",
+    "src/xnnpack/transpose.h",
     "src/xnnpack/vmul.h",
     "src/xnnpack/vmulcaddc.h",
     "src/xnnpack/vscale.h",
@@ -8610,6 +8612,15 @@ xnnpack_benchmark(
 )
 
 xnnpack_benchmark(
+    name = "x32_transpose_bench",
+    srcs = [
+        "bench/x32-transpose.cc",
+        "src/xnnpack/AlignedAllocator.h",
+    ] + MICROKERNEL_BENCHMARK_HDRS,
+    deps = MICROKERNEL_BENCHMARK_DEPS,
+)
+
+xnnpack_benchmark(
     name = "f32_gemm_bench",
     srcs = [
         "bench/f32-gemm.cc",
@@ -9788,6 +9799,15 @@ xnnpack_unit_test(
     srcs = [
         "test/f32-qu8-vcvt.cc",
         "test/vcvt-microkernel-tester.h",
+    ] + MICROKERNEL_TEST_HDRS,
+    deps = MICROKERNEL_TEST_DEPS,
+)
+
+xnnpack_unit_test(
+    name = "x32_transpose_test",
+    srcs = [
+        "test/x32-transpose.cc",
+        "test/transpose-microkernel-tester.h",
     ] + MICROKERNEL_TEST_HDRS,
     deps = MICROKERNEL_TEST_DEPS,
 )
