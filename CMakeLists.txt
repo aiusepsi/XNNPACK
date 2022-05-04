@@ -82,10 +82,13 @@ ENDIF()
 # ---[ Build flags
 IF(NOT CMAKE_SYSTEM_PROCESSOR)
   IF(IOS)
+    IF(NOT DEFINED IOS_ARCH AND DEFINED CMAKE_OSX_ARCHITECTURES)
+      SET(IOS_ARCH ${CMAKE_OSX_ARCHITECTURES})
+    ENDIF()
     LIST(LENGTH IOS_ARCH IOS_ARCH_COUNT)
     IF(IOS_ARCH_COUNT GREATER 1)
       MESSAGE(FATAL_ERROR "Unsupported XNNPACK build with multiple iOS architectures (${IOS_ARCH}). "
-        "Specify a single architecture in IOS_ARCH and re-configure. ")
+        "Specify a single architecture in IOS_ARCH or CMAKE_OSX_ARCHITECTURES and re-configure.")
     ENDIF()
     IF(NOT IOS_ARCH MATCHES "^(i386|x86_64|AMD64|armv7.*|arm64.*)$")
       MESSAGE(FATAL_ERROR "Unrecognized IOS_ARCH = ${IOS_ARCH}")
@@ -99,7 +102,7 @@ ENDIF()
 
 IF(NOT CMAKE_SYSTEM_NAME)
   MESSAGE(FATAL_ERROR "CMAKE_SYSTEM_NAME not defined")
-ELSEIF(NOT CMAKE_SYSTEM_NAME MATCHES "^(Darwin|Linux|Android|Windows|CYGWIN|MSYS|Emscripten)$")
+ELSEIF(NOT CMAKE_SYSTEM_NAME MATCHES "^(Darwin|Linux|Android|Windows|CYGWIN|MSYS|Emscripten|iOS)$")
   MESSAGE(FATAL_ERROR "Unrecognized CMAKE_SYSTEM_NAME = ${CMAKE_SYSTEM_NAME}")
 ENDIF()
 
